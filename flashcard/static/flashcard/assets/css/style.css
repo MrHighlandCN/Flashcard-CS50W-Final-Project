@@ -1,0 +1,353 @@
+body {
+    font-family: 'Inter', sans-serif; /* Font mặc định cho toàn bộ trang */
+}
+
+p {
+    margin: 0;
+}
+:root {
+    --main-color: #224f35;
+    --sub-color: #84ae91;
+    --light-gray: rgba(228, 226, 226, 1);
+}
+
+/* -------------------- ANIMATION ---------------------------- */
+/* Animation cho việc thêm thẻ */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-enter {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Animation cho việc xóa thẻ */
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.card-exit {
+    animation: slideOut 0.3s ease-out forwards;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+/*--------------------- BEGIN LAYOUT PAGE ---------------------*/
+#navbar-containter{
+    background-color: var(--main-color) !important;
+    font-family: 'Alatsi', sans-serif !important;
+    font-size: 20px;
+}
+
+.navbar-brand {
+    height: 48px;
+}
+.dropdown-menu .dropdown-item:hover{
+    background-color: var(--sub-color) !important;
+}
+
+/* .seach-form {
+    width: 50%;
+} */
+.seach-form input {
+    color: white !important;
+    font-weight: bold;
+}
+.seach-form input::placeholder{
+    color: white;
+    opacity: 0.8;
+}
+
+.account-avatar img{
+    width: 48px;
+    border-radius: 50%;
+}
+
+.page-container {
+    min-height: 82vh;
+    background-color: var(--main-color);
+}
+
+footer {
+    height: 64px;
+    padding: 8px 0px;
+    background-color: var(--main-color);
+}
+#folderModal .modal-content{
+    background-color: var(--main-color);
+    color: white;
+}
+#folderModal .modal-title{
+    font-family: 'Alatsi', sans-serif !important;
+
+}
+#create-folder-form input {
+    color: white ;
+    font-weight: bold;
+}
+#create-folder-form input::placeholder{
+    color: white;
+    font-weight: bold;
+}
+/*--------------------- END LAYOUT PAGE ---------------------*/
+
+/*--------------------- LOGIN / REGISTER PAGE ---------------------*/
+
+
+
+.login-form-container, .register-form-container {
+    width: 420px;
+    height: 480px;
+    background-color: white;
+    border-radius: 15px;
+    font-family: 'Alatsi', sans-serif;
+}
+.login-form, .register-form {
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
+.login-form, .register-form input {
+    height: 48px;
+}
+.login-form, .register-form label {
+    color: black !important;
+}
+
+.login-form, .register-form input::placeholder {
+    color: rgb(0, 0, 0, 0.5);
+} 
+/*--------------------- END LOGIN / REGISTER PAGE ---------------------*/
+
+
+/*--------------------- HOMEPAGE ---------------------*/
+.folder-listing, .set-listing {
+    position: relative;
+}
+.folder-listing .folders, .set-listing .sets{
+    
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex-wrap: nowrap;
+    -ms-overflow-style: none;  /* Ẩn thanh cuộn trên IE và Edge */
+    scrollbar-width: none;  
+}
+
+.folder-nav-prev, .folder-nav-next, .set-nav-prev, .set-nav-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;  
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    z-index: 1;
+    width:40px !important;
+}
+
+.folder-nav-prev, .set-nav-prev {
+    left: 0;
+}
+
+.folder-nav-next, .set-nav-next {
+    right: 0;
+}
+
+.folders .folder:hover, .sets .set:hover {
+    cursor: pointer;
+    border-bottom: 2px solid white;
+    border-radius: 15px;
+}
+
+
+/*--------------------- END HOMEPAGE ---------------------*/
+
+/*--------------------- CREATE SET PAGE ---------------------*/
+#create-set-form input, 
+#create-set-form textarea{
+    background-color: var(--sub-color) ;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid white;
+}
+
+#create-set-form input::placeholder,
+#create-set-form textarea::placeholder{
+    color: white;
+}
+
+#create-set-form input:focus,
+#create-set-form textarea:focus {
+    
+
+    border-bottom: 3px solid white;
+    box-shadow: 0 2px 0 0 var(--light-gray);
+}
+
+#create-cards-container .create-card-container{
+    min-height: 150px;
+    background-color: var(--sub-color);
+    border-radius: 15px;
+}
+
+#create-cards-container .create-card-container .card-header {
+    height: 48px;
+    border-bottom: 3px solid var(--main-color);
+}
+#create-cards-container .create-card-container .card-header .counter {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 16px;
+}
+
+.image-input-container {
+    position: relative;
+    border: 3px dashed var(--main-color);
+    border-radius: 10px;
+    height: 64px;
+    max-width: 80%;
+}
+.image-input-container .image-label{
+    cursor: pointer;
+    /* display: none; */
+}
+.image-input-container .image-review img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover; /* Đảm bảo hình ảnh chiếm đầy đủ khung */
+    border-radius: 10px;
+}
+.image-input-container .btn {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+
+.image-input-container .btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.card-image {
+    display: none;
+}
+/*--------------------- END CREATE SET PAGE ---------------------*/
+
+/*--------------------- FOLDER PAGE ---------------------*/
+
+.folder-page .body .set-item{
+    background-color: var(--sub-color);
+    min-height: 64px;
+    border-radius: 10px;
+    padding: 16px;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.folder-page .body .set-item:hover {
+    cursor: pointer;
+    border-bottom: 2px solid white;
+    border-radius: 10px;
+}
+
+#add-set-to-folder-modal .modal-content, #delete-folder-modal .modal-content, #delete-set-modal .modal-content{
+    background-color: var(--sub-color);
+}
+#add-set-to-folder-modal .modal-body, #delete-folder-modal .modal-body, #delete-set-modal .modal-body {
+    max-height: 350px;
+    overflow: auto;
+}
+
+#add-set-to-folder-modal .modal-content .form-check {
+    padding-left: 0px;
+}
+#add-set-to-folder-modal .modal-content .set-item {
+    background-color: var(--main-color);
+    border-radius: 10px;
+}
+
+#add-set-to-folder-modal .modal-content .set-item input {
+    margin-left: 0;
+}
+/*--------------------- END FOLDER PAGE ---------------------*/
+
+/*--------------------- SET PAGE ---------------------*/
+
+
+.set-page .flashcard {
+    width: 400px;
+    height: 300px;
+    perspective: 1000px;
+    margin-bottom: 20px;
+}
+#flashcard:hover {
+    cursor: pointer;
+} 
+.set-page .flashcard-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.6s;
+}
+
+.set-page .flashcard-front,.set-page .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.set-page .flashcard-front {
+    background-color: var(--sub-color);
+}
+
+.set-page .flashcard-back {
+    background-color: var(--sub-color);
+    transform: rotateY(180deg);
+}
+.set-page .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.set-page .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+}
+
+/*--------------------- END SET PAGE ---------------------*/
+
+
+
+

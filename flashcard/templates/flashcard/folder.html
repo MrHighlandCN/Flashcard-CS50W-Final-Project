@@ -1,0 +1,95 @@
+{% extends 'flashcard/layout.html' %}
+
+{% block body %}
+<div class="folder-page d-flex flex-column container">
+    <div class="hearder d-flex flex-sm-row flex-column flex-wrap justify-content-between w-100">
+        <div class="title text-light fw-bold flex-fill">
+            <h1>{{ folder.title }}</h1>
+        </div>
+        <div class="button-group d-flex flex-row ">
+            <button style="width: 64px;" class="btn btn-outline-light" data-bs-toggle="modal"
+                data-bs-target="#add-set-to-folder-modal">
+                <i class="bi bi-plus-lg fs-5"></i>
+            </button>
+
+            <button style="width: 64px;" class="btn btn-outline-danger ms-3" data-bs-toggle="modal"
+            data-bs-target="#delete-folder-modal">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </div>
+    </div>
+    <div class="body d-flex flex-column mt-5">
+        {% for set in folder.sets.all %}
+        <div class="set-item w-100 d-flex flex-row justify-content-between">
+            <div onclick="location.href='{% url 'set' set.id %}';" class="d-flex flex-row flex-fill">
+                <i style="color: rgb(58, 248, 86)" class="bi bi-square-half fs-2 me-3"></i>
+                <div class="content">
+                    <h6>{{ set.title }}</h6>
+                    <span>{{ set.cards.count }} card(s)</span>
+                </div>
+            </div>
+
+            <button style="width: 48px;" class=" btn btn-outline-danger"
+                onclick="remove_set_from_folder({{ set.id }}, '{{ set.title }}', this)">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="add-set-to-folder-modal" tabindex="-1" aria-labelledby="add-set-to-folder-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-light" id="add-set-to-folder-modalLabel">Add set to "{{ folder.title }}" folder</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-set-to-folder-form" method="POST" action="{% url 'add-set-to-folder' %}"
+                        class="form-check">
+                        {% csrf_token %}
+                        <input type="hidden" name="folder_id" value="{{ folder.id }}">
+                        {% for set in sets %}
+                        <div class="set-item d-flex flex-row my-2 p-2">
+                            <input class="form-check-input me-3" type="checkbox" value="{{ set.id }}" name="add-set[]"
+                                id="add-set-{{ set.id }}">
+                            <label class="form-check-label text-light fw-bold flex-fill" for="add-set-{{ set.id }}">{{
+                                set.title }}</label>
+                        </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                    <button form="add-set-to-folder-form" type="submit" class="btn btn-success">Add set(s)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="delete-folder-modal" tabindex="-1" aria-labelledby="delete-folder-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-light" id="delete-folder-modalLabel">Delete this folder?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-light">
+                    <form id="delete-folder-form" action="{% url 'delete-folder' folder.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ folder.id }}">
+                    </form>
+                    The folder will be permanently deleted, but you'll be able to find the items from it in your library.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                    <button form="delete-folder-form" type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

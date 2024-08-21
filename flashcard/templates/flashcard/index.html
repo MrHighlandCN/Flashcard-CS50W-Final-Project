@@ -1,0 +1,72 @@
+{% extends "flashcard/layout.html" %}
+
+{% block body %}
+{% if query %}
+<h2 class="text-light">Result for "{{ query }}":</h2>
+{% endif %}
+{% if folders.count != 0 %}
+<div class="folder-listing w-100 d-flex flex-column text-light p-2 mb-3">
+    <div class="title mb-2">
+        <h2>
+            Folders
+        </h2>
+    </div>
+    <div class="folders row d-flex g-3">    
+        {% for folder in folders %}
+        <div onclick="location.href='/folder/{{ folder.id }}'" class=" col-md-4 col-sm-6 col-12">
+            <div style="height: 196px; background-color: var(--sub-color);"
+                class="folder card w-100 p-2 rounded-4 text-light">
+                <div class="card-body">
+                    <h4 style="font-family: 'Alatsi', sans-serif;" class="card-title">{{ folder.title }}</h4>
+                    <p class="card-text">{{ folder.sets.count }} set(s)</p>
+
+                </div>
+                <div class="card-footer">
+                    <img src="{{ user.profile_pic.url }}" alt="" class="img-thumbnail rounded-5" width="30" height="30">
+                    <span>{{ folder.owner.username }}</span>
+
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        <button class="folder-nav-prev">❮</button>
+        <button class="folder-nav-next">❯</button>
+
+    </div>
+
+</div>
+{% endif %}
+
+{% if sets.count != 0 %}
+<div class="set-listing w-100 d-flex flex-column text-light p-2 ">
+    <div class="title mb-2">
+        <h2>
+            Sets
+        </h2>
+    </div>
+    <div class="sets row d-flex g-3">     
+        {% for set in sets %}
+        <div onclick="location.href='{% url 'set' set.id %}';" class="col-md-4 col-sm-6 col-12">
+            <div style="height: 196px; background-color: var(--sub-color);"
+                class="set card w-100 p-2 rounded-4 text-light">
+                <div class="card-body">
+                    <h4 style="font-family: 'Alatsi', sans-serif;" class="card-title">{{ set.title }}</h4>
+                    <p class="card-text">{{ set.cards.count }} card(s)</p>
+
+                </div>
+                <div class="card-footer">
+                    <img src="{{ user.profile_pic.url }}" alt="" class="img-thumbnail rounded-5" width="30" height="30">
+                    <span>{{ set.owner.username }}</span>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <button class="set-nav-prev">❮</button>
+        <button class="set-nav-next">❯</button>
+
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,158 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flashcard</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'flashcard/assets/img/favicon.png' %}">
+
+
+    <link rel="stylesheet" href="{% static 'flashcard/assets/css/style.css' %}">
+    <script src="{% static 'flashcard/assets/js/index.js' %}"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alatsi&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5e13f191b1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+    <!-- HEADER SECTION -->
+    <header>
+        <nav id="navbar-containter" class="navbar navbar-expand-md sticky-top">
+
+            <div class="container-fluid">
+                {% if user.is_authenticated %}
+                <div class="account-avatar dropdown me-3">
+                    <img src="{{ user.profile_pic.url }}" alt="user avatar" class="img-thumbnail" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul style="background-color: var(--main-color);" class="dropdown-menu">
+                        <li><a class="dropdown-item text-light" href="#">Account</a></li>
+                        <li><a class="dropdown-item text-light" href="/logout">Log out</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'flashcard/assets/img/logo.png' %}" alt="logo image" width="111" height="24">
+                </a>
+                {% if user.is_authenticated %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse me-2" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Create
+                            </a>
+                            <ul style="background-color: var(--main-color);" class="dropdown-menu ">
+                                <li>
+                                    <a class="dropdown-item text-light" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#folderModal">
+                                        <i style="color: white;" class="fa-solid fa-folder p-2"></i>
+                                        Folder
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+
+                                    <a class="dropdown-item text-light" href="/create-set">
+                                        <i style="color: white" class="bi bi-card-list p-2"></i>
+                                        Set
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" aria-current="page" href="{% url 'about' %}">About</a>
+                        </li>
+
+                    </ul>
+                    <form action="{% url 'search' %}" method="GET" class="seach-form d-flex" role="search">
+                        <input id="query" name="query" style="background-color: var(--sub-color);" class="form-control me-2" type="search"
+                            placeholder="Search" aria-label="Search">
+                        <button style="color: var(--main-color);" class="btn btn-light" type="submit">Search</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+
+
+    </header>
+    <!-- END HEADER SECTION -->
+    <!-- MESSAGE SECTION -->
+    {% if message %}
+    {% if status == "failed" %}
+    <div class="alert alert-danger mb-0 d-flex flex-row justify-content-between" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% elif status == "succeeded" %}
+    <div class="alert alert-success mb-0 d-flex flex-row justify-content-between" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endif %}
+    <!--END MESSAGE SECTION -->
+    <!-- BODY SECTION -->
+    <div class="page-container container-fluid d-flex flex-column justify-content-center align-items-center w-100">
+
+        {% block body %}
+        {% endblock %}
+    </div>
+
+
+    <!-- END BODY SECTION -->
+
+    <!-- FOOTER SECTION -->
+    <footer class="d-flex justify-content-center align-items-center text-light">
+        <div class="sticky-bottom">
+            <p class="m-0">Copyright <i class="fa-regular fa-copyright"></i> 2024 Mr.Highland</p>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="folderModal" tabindex="-1" aria-labelledby="folderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="folderModalLabel">Create a new folder</h2>
+                    <button type="button" class="btn-close bg-light rounded-5" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/create-folder" id="create-folder-form" method="POST">
+                        {% csrf_token %}
+                        <label for="title" class="form-label fs-5 fw-bold">Title</label>
+                        <input style="height: 48px; background-color: var(--sub-color);" type="text" name="title"
+                            id="title" placeholder="Enter your title" class="form-control">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button form="create-folder-form" style="background-color: var(--sub-color);" type="submit"
+                        class="btn text-light fw-bold fs-5">Create folder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

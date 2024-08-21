@@ -1,0 +1,98 @@
+{% extends 'flashcard/layout.html' %}
+
+{% block body %}
+<form method="POST" id="create-set-form" action="/create-set" class="w-100" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- This part is for set -->
+    <div id="create-set-container" class="row">
+        <div class="col-6 text-light fw-bold">
+            <label for="set-title" class="form-label">Title</label>
+            <input id="set-title" name="set-title" type="text" class="form-control" placeholder="Enter a title"
+                required>
+
+            <label for="set-description" class="form-label mt-3">Description</label>
+            <textarea id="set-description" name="set-description" type="text" class="form-control"
+                placeholder="Add a description"></textarea>
+        </div>
+    </div>
+    <!-- End -->
+
+    <!-- This part is for cards -->
+    <div id="create-cards-container" class="d-flex flex-column container-fluid  mt-5">
+        <div class="row create-card-container align-items-center p-2">
+            <div class="card-header col-12 d-flex flex-row justify-content-between align-items-center">
+                <div class="counter mb-3 ms-3">
+
+                </div>
+                <button type="button" class="delete-card-btn btn me-3 mb-3 text-light"><i
+                        style="color: white; font-size: 24px;" class="bi bi-trash"></i> Delete</button>
+            </div>
+            <div class="col-md-5 col-12">
+                <input id="content-0" name="content[]" type="text" class="form-control" placeholder="Enter a content"
+                    required>
+            </div>
+
+            <div class="col-md-5 col-10 ">
+                <input id="meaning-0" name="meaning[]" type="text" class="form-control" placeholder="Enter a meaning"
+                    required>
+            </div>
+
+            <div class=" col-2 mt-2">
+                <div class="image-input-container ms-auto d-flex flex-row text-center">
+                    <label for="card-image-input-0" class="image-label text-light fw-bold w-100">
+                        <i class="bi bi-image d-block"></i>
+                        <p>Image</p>
+                    </label>
+                    <div class="image-review">
+                        
+                    </div>
+                    <input id="card-image-input-0" type="file" class="card-image" name="card-image[]" accept="image/*">
+                    <button type="button" class="btn text-light"><i class="bi bi-trash"></i></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row create-card-container align-items-center mt-4">
+            <div class="card-header col-12 d-flex flex-row justify-content-between align-items-center">
+                <div class="counter mb-3 ms-3">
+
+                </div>
+                <button type="button" class="delete-card-btn btn me-3 mb-3 text-light"><i
+                        style="color: white; font-size: 24px;" class="bi bi-trash"></i> Delete</button>
+            </div>
+            <div class="col-md-5 col-12">
+                <input id="content-1" name="content[]" type="text" class="form-control" placeholder="Enter a content"
+                    required>
+            </div>
+
+            <div class="col-md-5 col-10">
+                <input id="meaning-1" name="meaning[]" type="text" class="form-control" placeholder="Enter a meaning"
+                    required>
+            </div>
+
+            <div class="col-2 mt-2">
+                <div class="image-input-container ms-auto d-flex flex-row text-center">
+                    <label for="card-image-input-1" class="image-label text-light fw-bold w-100">
+                        <i class="bi bi-image d-block"></i>
+                        <p>Image</p>
+                    </label>
+                    <div class="image-review">
+                        
+                    </div>
+                    <input id="card-image-input-1" type="file" class="card-image" name="card-image[]" accept="image/*">
+                    <button type="button" class="btn text-light"><i class="bi bi-trash"></i></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="button group d-flex justify-content-end mt-5">
+        <button id="add-card-button" type="button" class="btn btn-success btn-lg me-4"><i class="bi bi-plus-square"></i>
+            Add card</button>
+        <button type="submit" class="btn btn-primary btn-lg">Create</button>
+    </div>
+
+    <!-- End -->
+</form>
+{% endblock %}

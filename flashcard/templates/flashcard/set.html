@@ -1,0 +1,51 @@
+{% extends 'flashcard/layout.html' %}
+
+{% block body %}
+<div class="set-page container d-flex flex-column align-items-center justify-content-center text-light" data-set-id="{{ set.id }}">
+    <div class="title text-light d-flex flex-row justify-content-between mb-5 w-100">
+        <h1>{{ set.title }}</h1>
+        <button  id="delete-set-btn" class="btn btn-danger"><i class="bi bi-trash3" data-bs-toggle="modal"
+            data-bs-target="#delete-set-modal"></i></button>
+    </div>
+    
+    <div class="flashcard" id="flashcard">
+        <div class="flashcard-inner d-flex flex-row">       
+            <div class="flashcard-front">
+                <p id="flashcard-text-front"></p>
+            </div>
+            <div class="flashcard-back d-flex flex-row">
+                <p id="flashcard-text-back"></p>
+                <img style="max-width: 50%;" src="" alt="" class="flashcard-image rounded-4">
+            </div>
+        </div>
+    </div>
+    <div class="navigation">
+        <button id="prev-btn" class="btn btn-outline-light">Previous</button>
+        <span id="counter" class="text-light"></span>
+        <button id="next-btn" class="btn btn-outline-light">Next</button>
+        
+    </div>
+
+    <div class="modal fade" id="delete-set-modal" tabindex="-1" aria-labelledby="delete-set-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-light" id="delete-set-modalLabel">Delete this set?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-light">
+                    <form id="delete-set-form" action="{% url 'delete-set' set.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ set.id }}">
+                    </form>
+                    The set will be permanently deleted.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                    <button form="delete-set-form" type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
