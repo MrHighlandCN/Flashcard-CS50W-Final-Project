@@ -63,4 +63,4 @@ Aside from the differences, this web application still uses the knowledge gained
 ## How to run the application
 * Install project dependencies by running *pip install -r requirements.txt*
 * Make and apply migrations by running *python manage.py makemigrations* and *python manage.py migrate.*
-* Finally, running  *python manage runserver* to run the project*
+* Finally, running  *python manage runserver* to run the project.*
